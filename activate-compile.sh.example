@@ -1,0 +1,58 @@
+# -----------------------------------------------------------------------------
+# Setup your shell before compile C3D
+#
+# Usage: $ . activate-compile.sh
+#
+# Developer: Victor Escorcia
+# License: WTFPL
+# -----------------------------------------------------------------------------
+env_name="c3d"
+modules=(
+    compilers/gcc/4.9.4
+    compilers/cuda/7.5
+    apps/conda/4.1.1)
+
+if hash conda 2> /dev/null; then
+  source deactivate
+fi
+
+# Add-in requirements with modules
+if hash module 2> /dev/null; then
+  # Let's clean your environment
+  module purge
+
+  for i in "${modules[@]}"; do
+    module load $i
+    if [ $? -ne 0 ]; then
+      echo "Do ur homework. Adapt modules-env to your configuration.";
+    fi
+  done
+else
+  echo "Bro, You are too brave!\n" \
+       "Unfortunately, I can't help u if this fail :("
+fi
+
+# Activate conda environment
+if hash conda 2> /dev/null; then
+  if hash conda 2> /dev/null; then
+    # Wild west setup (it should be discouraged)
+    # We should use this instead: conda env update -f environment-linux-x64.yml
+    if [ ! "$(conda env list | grep "$env_name")" ]; then
+      conda create -n $env_name python=2.7 gflags glog boost \
+        protobuf opencv=2.* openblas blas=1.1 hdf5 leveldb -c conda-forge
+      source activate $env_name
+      # Workaround for using an old compiler with top of the line distribution
+      conda install cmake
+    else
+      source activate $env_name
+    fi
+  else
+    echo "Conda was not loaded. Check your configuration."
+  fi
+
+  export LD_LIBRARY_PATH=$CONDA_PREFIX/lib:$LD_LIBRARY_PATH
+  echo "Clean LD_LIBRARY_PATH once you finish"
+else
+  echo "Unsuccessful execution\n" \
+       "Conda was not loaded. Check your configuration."
+fi

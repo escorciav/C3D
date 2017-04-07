@@ -173,6 +173,11 @@ ifeq ($(OSX), 1)
 	endif
 endif
 
+# Custom compiler
+ifdef CUSTOM_CXX
+	CXX := $(CUSTOM_CXX)
+endif
+
 # Debugging
 DEBUG ?= 0
 ifeq ($(DEBUG), 1)

@@ -1,0 +1,19 @@
+# Binaries
+C3D-v1.0/Makefile.config
+C3D-v1.0/build
+C3D-v1.1/build*
+C3D-v1.1/python/caffe/_caffe.so
+C3D-v1.1/python/caffe/proto
+
+# Bash scripts
+activate*
+
+# Models
+*.caffemodel
+models/
+
+# Benchmark
+benchmark
+
+# Data
+C3D-v1.0/examples/c3d_feature_extraction/input/frm/v_*

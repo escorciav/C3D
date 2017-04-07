@@ -1,0 +1,27 @@
+#%Module1.0#####################################################################
+##
+## modules 3rdparty/c3d/v1.1/2017-04-01
+##
+## modulefiles/3rdparty/c3d/v1.1/2017-04-01  Written by Victor Escorcia
+##
+proc ModulesHelp { } {
+  global version modroot
+  puts stderr "3rdparty/c3d/v1.1/2017-04-01 - sets the Environment for C3D-facebook"
+}
+
+module-whatis   "Sets the Environment for using C3D-facebook"
+
+# for Tcl script use only
+set     topdir          /home/escorcv/projects/c3d/C3D-v1.1/build/
+set     condadir        /home/escorcv/install/bin/miniconda3/envs/c3d
+set     version         2017-04-01
+set     sys             linux86
+prereq compilers/gcc/4.9.4
+prereq compilers/cuda/7.5
+prereq apps/conda/4.1.1
+
+prepend-path    PATH    $topdir/build/tools
+prepend-path    CPATH   $topdir/include
+prepend-path    LD_LIBRARY_PATH         $topdir/build/lib
+prepend-path    LD_LIBRARY_PATH         $condadir/lib
+prepend-path    PYTHONPATH      $topdir/python
